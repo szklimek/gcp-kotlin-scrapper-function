@@ -16,6 +16,7 @@ configurations {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "com.google.cloud.functions:functions-framework-api:1.0.4"
+    implementation 'com.google.cloud:google-cloudevent-types:0.3.0'
 
     // To run function locally using Functions Framework's local invoker
     invoker "com.google.cloud.functions.invoker:java-function-invoker:1.1.0"
