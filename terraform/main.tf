@@ -11,4 +11,5 @@ module "website-archiver" {
   function_entry_point       = "functions.WebsiteArchiver"
   function_schedule          = var.function_schedule
   function_schedule_timezone = var.function_schedule_timezone
+  function_execution_timeout = var.function_execution_timeout
 }

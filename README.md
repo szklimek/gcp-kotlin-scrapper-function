@@ -87,6 +87,7 @@ There are other parameters that can be adjusted:
 - `function_schedule`: execution schedule (default: every day at 20:00 `0 20 * * *`), read
   more [Defining the Job Schedule](https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule)
 - `function_schedule_timezone`: the timezone for schedule (default `Europe/Berlin`)
+- `function_execution_timeout`: maximum time that single execution can take in seconds (default: `60`, max: `540`)
 
 Parameters can be provided using command line, environment variables or `.tfvars` files. Read
 more: [Assigning Values to Root Module Variables](https://www.terraform.io/language/values/variables#assigning-values-to-root-module-variables)

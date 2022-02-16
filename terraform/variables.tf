@@ -10,3 +10,6 @@ variable "function_schedule" {
 variable "function_schedule_timezone" {
   default = "Europe/Berlin"
 }
+variable "function_execution_timeout" {
+  default = "60"
+}

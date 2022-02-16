@@ -71,6 +71,7 @@ resource "google_cloudfunctions_function" "function" {
   source_archive_object = google_storage_bucket_object.zip.name
   entry_point           = var.function_entry_point
   max_instances         = 1
+  timeout               = var.function_execution_timeout
 
   event_trigger {
     event_type = "google.pubsub.topic.publish"
