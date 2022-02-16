@@ -73,43 +73,60 @@ curl localhost:8080 \
 
 ## Deploying to Google Cloud Platform from local machine
 
-Init and apply Terraform configuration:
+### Provide Terraform variables values
+
+Following are required:
+
+- `project`: project id on Google Cloud Platform
+- `websites_config_json`: list of websites to download formatted in JSON, where each site requires `name` and `url`
+  parameters e.g.: `[{"name":"site1","url":"https://site1.com"},{"name":"site2","url":"https://site2.com"}]`
+
+There are other parameters that can be adjusted:
+
+- `region`: region in which resources will be created (default: `europe-west1`)
+- `function_schedule`: execution schedule (default: every day at 20:00 `0 20 * * *`), read
+  more [Defining the Job Schedule](https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule)
+- `function_schedule_timezone`: the timezone for schedule (default `Europe/Berlin`)
+
+Parameters can be provided using command line, environment variables or `.tfvars` files. Read
+more: [Assigning Values to Root Module Variables](https://www.terraform.io/language/values/variables#assigning-values-to-root-module-variables)
+
+Examples:
+
+1. Environment variable
+
+```shell
+export TF_VAR_function_schedule='* * * * *'
+```
+
+2. Terraform variables in JSON (located in `terraform/terraform.tfvars.json`)
+
+```json
+{
+  "project": "my-example-google-cloud-project-id",
+  "websites_config_json": "[{\"name\":\"site1\",\"url\":\"https://site1.com\"},{\"name\":\"site2\",\"url\":\"https://site2.com\"}]",
+  "function_schedule": "* * * * *"
+}
+```
+
+### Init and apply Terraform configuration:
 
 ```shell
 # From root project directory
 cd terraform
 terraform init
-terraform plan
-terraform apply
-```
-
-Provide required parameters:
-
-- `project`: project id on Google Cloud Platforn
-- `websites_config_json`: list of websites to download formatted in JSON, where each site requires `name` and `url`
-  parameters e.g.: `[{"name":"site1","url":"https://site1.com"},{"name":"site2","url":"https://site2.com"}]`
-
-There are also additional parameters that can be adjusted by using environment variables e.g.:
-
-```shell
-# Setting Cloud Scheduler to send message every minute (see more: https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule)
-export TF_VAR_function_schedule='* * * * *'
-
-# Setting timezone for Cloud Scheduler
-export TF_VAR_function_schedule_timezone='Europe/Berlin'
-
-# Setting region for all resources
-export TF_VAR_region='europe-west1'
-
+terraform plan # Optional to inspect what is going to happen
 terraform apply
 ```
 
 For further improvements simply re-apply configuration:
 
 ```shell
-terraform plan
+terraform plan # Optional to inspect what is going to happen
 terraform apply
 ```
+
+### Cleaning up resources
 
 In case the function is not needed anymore all resources can be deleted by:
 
